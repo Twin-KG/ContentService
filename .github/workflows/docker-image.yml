@@ -36,10 +36,10 @@ jobs:
 
     - name: Build and tag Docker image
       run: |
-        docker build . -t zayarlinnnaung/auth-service
+        docker build . -t zayarlinnnaung/content-service
       env:
         DOCKER_BUILDKIT: 1
 
     - name: Push Docker image
       run: |
-        docker push zayarlinnnaung/auth-service:latest
+        docker push zayarlinnnaung/content-service:latest
