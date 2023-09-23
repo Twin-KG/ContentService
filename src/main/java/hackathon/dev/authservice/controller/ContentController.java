@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/contents")
 @AllArgsConstructor
+@CrossOrigin
 public class ContentController {
 
     private final ContentService contentService;
