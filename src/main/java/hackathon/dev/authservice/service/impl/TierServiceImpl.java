@@ -21,10 +21,6 @@ public class TierServiceImpl implements TierService {
         return tierRepo.save(tier);
     }
 
-    public List<Tier> saveAll(List<Tier> tierList) {
-        return tierList.stream().map(this::save).toList();
-    }
-
     @Override
     public List<Tier> saveDefaultTiersByProfessionId(Long professionId) {
 
@@ -37,6 +33,6 @@ public class TierServiceImpl implements TierService {
         Tier tier3 = Tier.builder()
                 .imgUrl("https://i.ibb.co/1T4DSNM/tier2.webp").name("Premium").price(7).rank(3).professionId(professionId).build();
 
-        return saveAll(List.of(tier1, tier2, tier3));
+        return tierRepo.saveAll(List.of(tier1, tier2, tier3));
     }
 }
