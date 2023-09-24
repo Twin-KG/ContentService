@@ -1,15 +1,14 @@
 package hackathon.dev.authservice.service.impl;
 
-import hackathon.dev.authservice.client.ProfessionServiceClient;
-import hackathon.dev.authservice.domain.ZResponse;
 import hackathon.dev.authservice.dto.ContentRequestDto;
-import hackathon.dev.authservice.dto.Professions;
 import hackathon.dev.authservice.model.AccessType;
 import hackathon.dev.authservice.model.Content;
 import hackathon.dev.authservice.model.Tier;
 import hackathon.dev.authservice.repo.AccessTypeRepo;
 import hackathon.dev.authservice.repo.ContentRepo;
 import hackathon.dev.authservice.repo.TierRepo;
+import hackathon.dev.authservice.request.ProfessionalFilter;
+import hackathon.dev.authservice.request.ProfessionalRequest;
 import hackathon.dev.authservice.service.ContentService;
 import hackathon.dev.authservice.utils.FileUtils;
 import jakarta.transaction.Transactional;
@@ -18,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -95,5 +96,22 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public Content deleteContentById(Long id) {
         return null;
+    }
+
+    @Override
+    public List<Content> filterContentsByRequest(ProfessionalRequest request) {
+        List<Content> result = new ArrayList<>();
+        List<Content> contentList = contentRepo.findAll();
+        List<ProfessionalFilter> professionals = request.getProfessionals();
+
+        for (ProfessionalFilter f : professionals) {
+            for (Content c :contentList) {
+                if(f.getProfessional_id().equals(c.getProfessionalId()) && f.getTier_id().equals(c.getTier().getId())){
+                    result.add(c);
+                }
+            }
+        }
+
+        return result;
     }
 }

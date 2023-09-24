@@ -3,6 +3,7 @@ package hackathon.dev.authservice.controller;
 import hackathon.dev.authservice.domain.ZResponse;
 import hackathon.dev.authservice.dto.ContentRequestDto;
 import hackathon.dev.authservice.model.Content;
+import hackathon.dev.authservice.request.ProfessionalRequest;
 import hackathon.dev.authservice.service.ContentService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/contents")
 @AllArgsConstructor
@@ -18,6 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class ContentController {
 
     private final ContentService contentService;
+
+    @PostMapping("/filter")
+    public List<Content> getContentsByProfessionId(@RequestBody ProfessionalRequest request){
+        return contentService.filterContentsByRequest(request);
+    }
 
     @PostMapping
     public ResponseEntity<ZResponse<Content>> addNewContent(
