@@ -25,13 +25,13 @@ public class TierServiceImpl implements TierService {
     public List<Tier> saveDefaultTiersByProfessionId(Long professionId) {
 
         Tier tier1 = Tier.builder()
-                .imgUrl("https://i.ibb.co/KG8MwXp/octopus.webp").name("Basic").price(2).rank(1).professionId(professionId).build();
+                .imgUrl("https://i.ibb.co/ZXjmWP0/1.png").name("Basic").price(2).rank(1).professionId(professionId).build();
 
         Tier tier2 = Tier.builder()
-                .imgUrl("https://i.ibb.co/NrrYpRx/seaslug.webp").name("Classic").price(5).rank(2).professionId(professionId).build();
+                .imgUrl("https://i.ibb.co/Y0jW0Dc/2.png").name("Classic").price(5).rank(2).professionId(professionId).build();
 
         Tier tier3 = Tier.builder()
-                .imgUrl("https://i.ibb.co/1T4DSNM/tier2.webp").name("Premium").price(7).rank(3).professionId(professionId).build();
+                .imgUrl("https://i.ibb.co/pjF557k/3.png").name("Premium").price(7).rank(3).professionId(professionId).build();
 
         return tierRepo.saveAll(List.of(tier1, tier2, tier3));
     }
