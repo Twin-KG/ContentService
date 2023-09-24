@@ -6,7 +6,7 @@ spring:
     username: hackathon
     password: Zayar2142000
     driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:  
+  jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
