@@ -20,7 +20,7 @@ public class FileUtils {
     private static RestTemplate restTemplate = new RestTemplate();
 
     public static String save(MultipartFile file){
-        if(!file.isEmpty()){
+        if(file != null && !file.isEmpty()){
             Resource resource;
             try{
 

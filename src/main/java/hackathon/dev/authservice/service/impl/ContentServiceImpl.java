@@ -61,7 +61,6 @@ public class ContentServiceImpl implements ContentService {
         videoPath = FileUtils.save(dto.getVideo());
 
         Optional<AccessType> accessType = accessTypeRepo.findById(dto.getAccessTypeId());
-        Optional<Tier> tier = tierRepo.findById(dto.getTierId());
 
         Content content = Content.builder()
                 .title(dto.getTitle())
@@ -72,10 +71,15 @@ public class ContentServiceImpl implements ContentService {
                 .audio(audioPath)
                 .image(imagePath)
                 .video(videoPath)
-                .tier(tier.isPresent() ? tier.get(): null)
                 .accessType(accessType.isPresent() ? accessType.get(): null)
                 .professionalId(dto.getProfessionalId())
                 .build();
+
+        if(dto.getTierId() != null){
+            Optional<Tier> tier = tierRepo.findById(dto.getTierId());
+            content.setTier(tier.get());
+        }
+
 
         return contentRepo.save(content);
     }

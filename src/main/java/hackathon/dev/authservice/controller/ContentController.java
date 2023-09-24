@@ -37,17 +37,17 @@ public class ContentController {
 
     @PostMapping
     public ResponseEntity<ZResponse<Content>> addNewContent(
-            @RequestParam("title") String title,
-            @RequestParam("content") String content,
-            @RequestParam("audio") MultipartFile audio,
-            @RequestParam("video") MultipartFile video,
-            @RequestParam("image") MultipartFile image,
-            @RequestParam("link") String link,
-            @RequestParam("embeddedUrl") String embeddedUrl,
-            @RequestParam("status") String status,
-            @RequestParam("accessTypeId") Long accessTypeId,
-            @RequestParam("tierId") Long tierId,
-            @RequestParam("professionalId") Long professionalId) throws IOException {
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "content", required = false) String content,
+            @RequestParam(value = "audio", required = false) MultipartFile audio,
+            @RequestParam(value = "video", required = false) MultipartFile video,
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam(value = "link", required = false) String link,
+            @RequestParam(value = "embeddedUrl", required = false) String embeddedUrl,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "accessTypeId", required = false) Long accessTypeId,
+            @RequestParam(value = "tierId", required = false) Long tierId,
+            @RequestParam(value = "professionalId", required = false) Long professionalId) throws IOException {
 
         ContentRequestDto dto = ContentRequestDto
                 .builder()
