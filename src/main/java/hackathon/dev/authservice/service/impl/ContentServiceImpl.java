@@ -44,7 +44,8 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public Page<Content> getAllContentsByProfessionId(int page, int size, Long professionId) {
-        return null;
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return contentRepo.findContentByProfessionalId(pageRequest, professionId);
     }
 
     @Override
