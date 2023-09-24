@@ -98,7 +98,7 @@ public class ContentServiceImpl implements ContentService {
 
         for (ProfessionalFilter f : professionals) {
             for (Content c :contentList) {
-                if(c.getTier().getId() == null){
+                if(c.getTier() == null){
                     result.add(c);
                 }else if(f.getProfessional_id().equals(c.getProfessionalId()) && f.getTier_id().equals(c.getTier().getId())){
                     result.add(c);
