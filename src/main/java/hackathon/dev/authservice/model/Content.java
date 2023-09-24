@@ -1,5 +1,6 @@
 package hackathon.dev.authservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,8 +30,9 @@ public class Content {
     @JoinColumn(name = "accessType_id", referencedColumnName = "id")
     private AccessType accessType;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tier_id", referencedColumnName = "id")
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "tier_id")
     private Tier tier;
 
     private Long professionalId;

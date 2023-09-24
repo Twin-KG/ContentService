@@ -1,17 +1,24 @@
 package hackathon.dev.authservice.controller;
 
+import hackathon.dev.authservice.constant.FileServerConstant;
 import hackathon.dev.authservice.domain.ZResponse;
 import hackathon.dev.authservice.dto.ContentRequestDto;
 import hackathon.dev.authservice.model.Content;
 import hackathon.dev.authservice.request.ProfessionalRequest;
 import hackathon.dev.authservice.service.ContentService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -21,6 +28,7 @@ import java.util.List;
 public class ContentController {
 
     private final ContentService contentService;
+    private final RestTemplate restTemplate;
 
     @PostMapping("/filter")
     public List<Content> getContentsByProfessionId(@RequestBody ProfessionalRequest request){
@@ -39,7 +47,7 @@ public class ContentController {
             @RequestParam("status") String status,
             @RequestParam("accessTypeId") Long accessTypeId,
             @RequestParam("tierId") Long tierId,
-            @RequestParam("professionalId") Long professionalId){
+            @RequestParam("professionalId") Long professionalId) throws IOException {
 
         ContentRequestDto dto = ContentRequestDto
                 .builder()

@@ -56,17 +56,9 @@ public class ContentServiceImpl implements ContentService {
         String imagePath = null;
         String videoPath = null;
 
-        if(dto.getAudio() != null){
-            audioPath = FileUtils.save(dto.getAudio(), "/audio/" + dto.getProfessionalId() + "/" + currentTime);
-        }
-
-        if(dto.getImage() != null){
-            imagePath = FileUtils.save(dto.getImage(), "/image/" + dto.getProfessionalId() + "/" + currentTime);
-        }
-
-        if(dto.getVideo() != null){
-            videoPath = FileUtils.save(dto.getVideo(), "/video/" + dto.getProfessionalId() + "/" + currentTime);
-        }
+        audioPath = FileUtils.save(dto.getAudio());
+        imagePath = FileUtils.save(dto.getImage());
+        videoPath = FileUtils.save(dto.getVideo());
 
         Optional<AccessType> accessType = accessTypeRepo.findById(dto.getAccessTypeId());
         Optional<Tier> tier = tierRepo.findById(dto.getTierId());

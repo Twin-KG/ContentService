@@ -1,42 +1,59 @@
 package hackathon.dev.authservice.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import hackathon.dev.authservice.constant.FileServerConstant;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 
 public class FileUtils {
 
-    private static final String defaultPath = "D:/uploads";
+    private static RestTemplate restTemplate = new RestTemplate();
 
-    public static String save(MultipartFile file, String folderPath){
+    public static String save(MultipartFile file){
+        if(!file.isEmpty()){
+            Resource resource;
+            try{
 
-        String resultPath = "";
-
-        try {
-
-            if(!StringUtils.isBlank(file.getOriginalFilename())) {
-                // Create the directory if it doesn't exist
-                File directory = new File(defaultPath + folderPath);
-                if (!directory.exists()) {
-                    directory.mkdirs(); // Create the directory and any necessary parent directories
-                }
-
-                // Get the original file name
-                String fileName = file.getOriginalFilename();
+                resource = new ByteArrayResource(file.getBytes()) {
+                    @Override
+                    public String getFilename() {
+                        return file.getOriginalFilename();
+                    }
+                };
 
 
-                resultPath = folderPath + "/" + fileName;
+                // Create a MultiValueMap to hold the multipart request
+                MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+                body.add("file", resource);
 
-                // Create a new file object with the desired path
-                File destFile = new File(defaultPath + resultPath);
-                file.transferTo(destFile);
+                // Define request headers
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+                // Create the request entity with the multipart data and headers
+                HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+                // Send the POST request with the multipart file using RestTemplate
+                ResponseEntity<String> responseEntity = restTemplate.postForEntity(FileServerConstant.HOST + "/storage/upload", requestEntity, String.class);
+
+
+                return responseEntity.getBody();
+
+            }catch (IOException e){
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-        return resultPath;
+        return null;
     }
 }

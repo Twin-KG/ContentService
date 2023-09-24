@@ -3,6 +3,8 @@ package hackathon.dev.authservice.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -18,4 +20,7 @@ public class Tier {
     private double price;
     private String imgUrl;
     private Long professionId;
+
+    @OneToMany(mappedBy = "tier", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Content> contentList;
 }
