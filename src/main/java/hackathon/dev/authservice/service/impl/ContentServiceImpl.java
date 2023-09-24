@@ -13,8 +13,6 @@ import hackathon.dev.authservice.service.ContentService;
 import hackathon.dev.authservice.utils.FileUtils;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,21 +29,18 @@ public class ContentServiceImpl implements ContentService {
     private final TierRepo tierRepo;
 
     @Override
-    public Page<Content> getAllContentWithPaging(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return contentRepo.findAll(pageRequest);
+    public List<Content> getAllContentWithPaging() {
+        return contentRepo.findAll();
     }
 
     @Override
-    public Page<Content> getAllContentsByAccessTypeAndTierId(int page, int size, Long accessTypeId, Long tierId) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return contentRepo.findContentByAccessTypeOrTierId(pageRequest, accessTypeId, tierId);
+    public List<Content> getAllContentsByAccessTypeAndTierId(Long accessTypeId, Long tierId) {
+        return contentRepo.findContentByAccessTypeOrTierId(accessTypeId, tierId);
     }
 
     @Override
-    public Page<Content> getAllContentsByProfessionId(int page, int size, Long professionId) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return contentRepo.findContentByProfessionalId(pageRequest, professionId);
+    public List<Content> getAllContentsByProfessionId(Long professionId) {
+        return contentRepo.getAllByProfessionalId(professionId);
     }
 
     @Override

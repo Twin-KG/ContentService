@@ -8,9 +8,9 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface ContentService {
-    Page<Content> getAllContentWithPaging(int page, int size);
-    Page<Content> getAllContentsByAccessTypeAndTierId(int page, int size, Long accessType, Long tierId);
-    Page<Content> getAllContentsByProfessionId(int page, int size, Long professionId);
+    List<Content> getAllContentWithPaging();
+    List<Content> getAllContentsByAccessTypeAndTierId(Long accessType, Long tierId);
+    List<Content> getAllContentsByProfessionId(Long professionId);
     Content saveContent(ContentRequestDto contentRequestDto);
     Content updateContentById(Long id, ContentRequestDto contentRequestDto);
     Content deleteContentById(Long id);

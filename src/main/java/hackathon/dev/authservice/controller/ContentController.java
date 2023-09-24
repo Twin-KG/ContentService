@@ -1,19 +1,13 @@
 package hackathon.dev.authservice.controller;
 
-import hackathon.dev.authservice.constant.FileServerConstant;
 import hackathon.dev.authservice.domain.ZResponse;
 import hackathon.dev.authservice.dto.ContentRequestDto;
 import hackathon.dev.authservice.model.Content;
 import hackathon.dev.authservice.request.ProfessionalRequest;
 import hackathon.dev.authservice.service.ContentService;
 import lombok.AllArgsConstructor;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,20 +58,16 @@ public class ContentController {
     }
 
     @GetMapping
-    public Page<Content> getContentsByAccessTypeAndTierId(
-            @RequestParam("page") int page,
-            @RequestParam("size") int size,
+    public List<Content> getContentsByAccessTypeAndTierId(
             @RequestParam(value = "accessTypeId") Long accessTypeId,
             @RequestParam(value = "tierId", required = false) Long tierId){
-        return contentService.getAllContentsByAccessTypeAndTierId(page, size, accessTypeId, tierId);
+        return contentService.getAllContentsByAccessTypeAndTierId(accessTypeId, tierId);
     }
 
     @GetMapping("/search")
-    public Page<Content> getContentsByProfessionId(
-            @RequestParam("page") int page,
-            @RequestParam("size") int size,
+    public List<Content> getContentsByProfessionId(
             @RequestParam("professionId") Long professionId){
-        return contentService.getAllContentsByProfessionId(page, size, professionId);
+        return contentService.getAllContentsByProfessionId(professionId);
     }
 
 }
