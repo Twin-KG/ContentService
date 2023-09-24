@@ -56,4 +56,12 @@ public class ContentController {
         return contentService.getAllContentsByAccessTypeAndTierId(page, size, accessTypeId, tierId);
     }
 
+    @GetMapping("/search")
+    public Page<Content> getContentsByProfessionId(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("professionId") Long professionId){
+        return contentService.getAllContentsByProfessionId(page, size, professionId);
+    }
+
 }

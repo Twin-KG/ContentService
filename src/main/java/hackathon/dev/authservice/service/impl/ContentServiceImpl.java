@@ -42,6 +42,11 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
+    public Page<Content> getAllContentsByProfessionId(int page, int size, Long professionId) {
+        return null;
+    }
+
+    @Override
     public Content saveContent(ContentRequestDto dto) {
 
         Long currentTime = System.currentTimeMillis();

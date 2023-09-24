@@ -12,4 +12,5 @@ public interface ContentRepo extends JpaRepository<Content, Long> {
             "LEFT JOIN Tier t ON t.id = :tierId " +
             "WHERE c.accessType.rank > a.rank OR c.tier.rank > t.rank")
     Page<Content> findContentByAccessTypeOrTierId(PageRequest pageRequest, Long accessTypeId, Long tierId);
+
 }
